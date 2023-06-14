@@ -8,23 +8,61 @@ Install the gem and add to the application's Gemfile by executing:
 
     $ bundle add rondo_form
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+Or inside the Gemfile add the following
 
-    $ gem install rondo_form
+    $ gem 'rondo_form', '~> 0.2.0'
 
 Run the installation task:
 
-    $ rails g rondo_form:install
+    $ rails g rondo_form:install 
 
 ## Usage
 
+For example, we have `Project` model, which has `has_many` relationship with `Task` model:
+```
+rails g scaffold Project name:string description:string
+rails g model Task description:string done:boolean project:belongs_to
+```
 
+### Sample with SimpleForm
+In your `projects/_form` partial:
+``` erb
+<%= simple_form_for(@project) do |f| %>
 
-## Development
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :description %>
+  </div>
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+  <h3 class="text-xl mt-4">Tasks</h3>
+  <div class="my-2" data-controller="cocoon">
+    <%= f.simple_fields_for :tasks do |task| %>
+      <%= render "task_fields", f: task %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association "Add Task", f, :tasks %>
+    </div>
+  </div>
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+  <div class="form-actions mt-4">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+```
+
+In your `_task_fields` partial:
+``` erb
+<div class="nested-fields">
+  <%= f.input :description %>
+  <%= f.input :done, as: :boolean %>
+  <%= link_to_remove_association "Remove Task", f %>
+</div>
+
+```
+
+_Note_: You must add `data-controller="cocoon"`  to an element, that wraps `fields_for` and `link_to_add_association` helper.
+
 
 ## Contributing
 
