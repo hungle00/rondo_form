@@ -1,6 +1,6 @@
 # RondoForm
 
-Handle nested forms, same as Cocoon, but using StimulusJS
+Handle dynamic nested forms, same as Cocoon, but using StimulusJS
 
 ## Installation
 
@@ -10,7 +10,7 @@ Install the gem and add to the application's Gemfile by executing:
 
 Or inside the Gemfile add the following
 
-    $ gem 'rondo_form', '~> 0.2.0'
+    $ gem 'rondo_form', '~> 0.2.1'
 
 Run the installation task:
 
@@ -35,7 +35,7 @@ In your `projects/_form` partial:
   </div>
 
   <h3 class="text-xl mt-4">Tasks</h3>
-  <div class="my-2" data-controller="cocoon">
+  <div class="my-2" data-controller="nested-rondo">
     <%= f.simple_fields_for :tasks do |task| %>
       <%= render "task_fields", f: task %>
     <% end %>
@@ -61,7 +61,7 @@ In your `_task_fields` partial:
 
 ```
 
-_Note_: You must add `data-controller="cocoon"`  to an element, that wraps `fields_for` and `link_to_add_association` helper.
+_Note_: You must add `data-controller="nested-rondo"`  to an element, that wraps `fields_for` and `link_to_add_association` helper.
 
 
 ## Contributing

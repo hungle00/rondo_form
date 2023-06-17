@@ -24,7 +24,7 @@ module RondoForm
 
         is_dynamic = f.object.new_record?
         html_options[:class] = [html_options[:class], "remove_fields #{is_dynamic ? 'dynamic' : 'existing'}"].compact.join(' ')
-        html_options[:'data-action'] = "click->cocoon#removeField"
+        html_options[:'data-action'] = "click->nested-rondo#removeField"
         f.hidden_field(:_destroy) + link_to(name, '', html_options)
       end
     end
@@ -48,11 +48,11 @@ module RondoForm
 
         html_options[:class] = [html_options[:class], "add_fields"].compact.join(' ')
         html_options[:'data-association'] = association.to_s.singularize
-        html_options[:'data-action'] = "click->cocoon#addField"
+        html_options[:'data-action'] = "click->nested-rondo#addField"
 
         new_object = f.object.class.reflect_on_association(association).klass.new
         model_name = new_object.class.name.underscore
-        hidden_div = content_tag("template", id: "#{model_name}_fields_template", data: {cocoon_target: 'template'}) do
+        hidden_div = content_tag("template", id: "#{model_name}_fields_template", data: {'nested-rondo_target': 'template'}) do
           render_association(association, f, new_object)
         end
       end
