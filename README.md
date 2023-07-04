@@ -10,7 +10,7 @@ Install the gem and add to the application's Gemfile by executing:
 
 Or inside the Gemfile add the following
 
-    $ gem 'rondo_form', '~> 0.2.1'
+    $ gem 'rondo_form', '~> 0.2.2'
 
 Run the installation task:
 
@@ -36,9 +36,11 @@ In your `projects/_form` partial:
 
   <h3 class="text-xl mt-4">Tasks</h3>
   <div class="my-2" data-controller="nested-rondo">
-    <%= f.simple_fields_for :tasks do |task| %>
-      <%= render "task_fields", f: task %>
-    <% end %>
+    <div data-nested-rondo-target="fieldContain">
+      <%= f.simple_fields_for :tasks do |task| %>
+        <%= render "task_fields", f: task %>
+      <% end %>
+    </div>
     <div class="links">
       <%= link_to_add_association "Add Task", f, :tasks %>
     </div>
@@ -61,8 +63,9 @@ In your `_task_fields` partial:
 
 ```
 
-_Note_: You must add `data-controller="nested-rondo"`  to an element, that wraps `fields_for` and `link_to_add_association` helper.
-
+_Note_:
+- Stimulus controller is `nested-rondo`, so you need to declare the element with `data-controller="nested-rondo"`.
+- You must add `data-nested-rondo-target="fieldContain"`  to an element, that wraps all nested fields, the new field will be appended to this element.
 
 ## Contributing
 
