@@ -55,8 +55,8 @@ module RondoForm
         hidden_div = content_tag("template", id: "#{model_name}_fields_template", data: {'nested-rondo_target': 'template'}) do
           render_association(association, f, new_object)
         end
+        hidden_div.html_safe + link_to(name, '', html_options )
       end
-      hidden_div.html_safe + link_to(name, '', html_options )
     end
 
     # :nodoc:
