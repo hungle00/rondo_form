@@ -35,7 +35,7 @@ In your `projects/_form` partial:
   </div>
 
   <h3 class="text-xl mt-4">Tasks</h3>
-  <div class="my-2" data-controller="nested-rondo">
+  <div class="my-2" data-controller="nested-rondo" data-nested-rondo-field-class-value="task-field">
     <div data-nested-rondo-target="fieldContain">
       <%= f.simple_fields_for :tasks do |task| %>
         <%= render "task_fields", f: task %>
@@ -55,7 +55,7 @@ In your `projects/_form` partial:
 
 In your `_task_fields` partial:
 ``` erb
-<div class="nested-fields">
+<div class="task-field">
   <%= f.input :description %>
   <%= f.input :done, as: :boolean %>
   <%= link_to_remove_association "Remove Task", f %>
