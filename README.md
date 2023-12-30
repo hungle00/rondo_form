@@ -10,7 +10,7 @@ Install the gem and add to the application's Gemfile by executing:
 
 Or inside the Gemfile add the following
 
-    $ gem 'rondo_form', '~> 0.2.3'
+    $ gem 'rondo_form', '~> 0.2.4'
 
 Run the installation task:
 
@@ -35,7 +35,7 @@ In your `projects/_form` partial:
   </div>
 
   <h3 class="text-xl mt-4">Tasks</h3>
-  <div class="my-2" data-controller="nested-rondo">
+  <div class="my-2" data-controller="nested-rondo" data-nested-rondo-field-class-value="task-field">
     <div data-nested-rondo-target="fieldContain">
       <%= f.simple_fields_for :tasks do |task| %>
         <%= render "task_fields", f: task %>
@@ -55,7 +55,7 @@ In your `projects/_form` partial:
 
 In your `_task_fields` partial:
 ``` erb
-<div class="nested-fields">
+<div class="task-field">
   <%= f.input :description %>
   <%= f.input :done, as: :boolean %>
   <%= link_to_remove_association "Remove Task", f %>
@@ -66,6 +66,7 @@ In your `_task_fields` partial:
 _Note_:
 - Stimulus controller is `nested-rondo`, so you need to declare the element with `data-controller="nested-rondo"`.
 - You must add `data-nested-rondo-target="fieldContain"`  to an element, that wraps all nested fields, the new field will be appended to this element.
+- `data-nested-rondo-field-class-value` is used to detect the element that needs to be removed. Its value must match the class name that wraps the partial. If you do not declare it, it will default remove the closest parent element.
 
 ## Contributing
 
