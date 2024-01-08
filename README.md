@@ -63,10 +63,10 @@ In your `_task_fields` partial:
 
 ```
 
-_Note_:
-- Stimulus controller is `nested-rondo`, so you need to declare the element with `data-controller="nested-rondo"`.
-- You must add `data-nested-rondo-target="fieldContain"`  to an element, that wraps all nested fields, the new field will be appended to this element.
-- `data-nested-rondo-field-class-value` is used to detect the element that needs to be removed. Its value must match the class name that wraps the partial. If you do not declare it, it will default remove the closest parent element.
+_Convention_:
+- For convention, I named Stimulus controller `nested-rondo`. But you can change the name of Javascript file and the value of `data-controller` to match your purpose.
+- `data-nested-rondo-target="fieldContain"` must be added to an element that wraps all nested fields, the new field will be appended to this element.
+- `data-nested-rondo-field-class-value` is used to detect the element that needs to be removed. Its value must match the class name of an element that wraps the partial. If you do not declare it, it will default remove the closest parent element.
 
 ## Contributing
 
