@@ -10,7 +10,7 @@ Install the gem and add to the application's Gemfile by executing:
 
 Or inside the Gemfile add the following
 
-    $ gem 'rondo_form', '~> 0.2.4'
+    $ gem 'rondo_form', '~> 0.2.5'
 
 Run the installation task:
 
