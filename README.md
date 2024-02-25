@@ -18,13 +18,23 @@ Run the installation task:
 
 ## Usage
 
-For example, we have `Project` model, which has `has_many` relationship with `Task` model:
+For example, you have `Project` model, which has `has_many` relationship with `Task` model:
 ```
 rails g scaffold Project name:string description:string
 rails g model Task description:string done:boolean project:belongs_to
 ```
+You need to add `accepts_nested_attributes_for` to `Project` model:
+```
+class Project < ApplicationRecord
+  has_many :tasks, dependent: :destroy
+  accepts_nested_attributes_for :tasks, reject_if: :all_blank, allow_destroy: true
+end
+```
 
 ### Sample with SimpleForm
+The RondoForm gem adds two helper functions: `link_to_add_association` and `link_to_remove_association`.  
+The example below illustrates the way to use it.
+
 In your `projects/_form` partial:
 ``` erb
 <%= simple_form_for(@project) do |f| %>
@@ -67,6 +77,8 @@ _Convention_:
 - For convention, I named Stimulus controller `nested-rondo`. But you can change the name of Javascript file and the value of `data-controller` to match your purpose.
 - `data-nested-rondo-target="fieldContain"` must be added to an element that wraps all nested fields, the new field will be appended to this element.
 - `data-nested-rondo-field-class-value` is used to detect the element that needs to be removed. Its value must match the class name of an element that wraps the partial. If you do not declare it, it will default remove the closest parent element.
+
+View details implement for this sample at [rondo_form_demo_turbo_8](https://github.com/hungle00/turbo_8_demos/tree/rondo_form)
 
 ## Contributing
 
