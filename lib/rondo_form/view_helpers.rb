@@ -11,7 +11,6 @@ module RondoForm
     # - *f* : the form this link should be placed in
     # - *html_options*:  html options to be passed to link_to (see <tt>link_to</tt>)
     # - *&block*:        the output of the block will be show in the link, see <tt>link_to</tt>
-    
     def link_to_remove_association(*args, &block)
       if block_given?
         f            = args.first
@@ -62,8 +61,9 @@ module RondoForm
 
     # :nodoc:
     def render_association(association, f, new_object)
+      partial_name = html_options[:partial_name] || association.to_s.singularize + "_fields"
       f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-        render(association.to_s.singularize + "_fields", :f => builder, :dynamic => true)
+        render(partial_name, :f => builder, :dynamic => true)
       end
     end
   end
