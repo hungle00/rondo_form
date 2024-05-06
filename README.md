@@ -14,16 +14,19 @@ Or inside the Gemfile add the following
 
 Run the installation task:
 
-    $ rails g rondo_form:install 
+    $ rails g rondo_form:install
 
 ## Usage
 
 For example, you have `Project` model, which has `has_many` relationship with `Task` model:
+
 ```
 rails g scaffold Project name:string description:string
 rails g model Task description:string done:boolean project:belongs_to
 ```
+
 You need to add `accepts_nested_attributes_for` to `Project` model:
+
 ```
 class Project < ApplicationRecord
   has_many :tasks, dependent: :destroy
@@ -32,10 +35,12 @@ end
 ```
 
 ### Sample with SimpleForm
-The RondoForm gem adds two helper functions: `link_to_add_association` and `link_to_remove_association`.  
+
+The RondoForm gem adds two helper functions: `link_to_add_association` and `link_to_remove_association`.
 The example below illustrates the way to use it.
 
 In your `projects/_form` partial:
+
 ``` erb
 <%= simple_form_for(@project) do |f| %>
 
@@ -60,23 +65,24 @@ In your `projects/_form` partial:
     <%= f.button :submit %>
   </div>
 <% end %>
-
 ```
 
 In your `_task_fields` partial:
+
 ``` erb
 <div class="task-field">
   <%= f.input :description %>
   <%= f.input :done, as: :boolean %>
   <%= link_to_remove_association "Remove Task", f %>
 </div>
-
 ```
 
 _Convention_:
+
 - For convention, I named Stimulus controller `nested-rondo`. But you can change the name of Javascript file and the value of `data-controller` to match your purpose.
 - `data-nested-rondo-target="fieldContain"` must be added to an element that wraps all nested fields, the new field will be appended to this element.
 - `data-nested-rondo-field-class-value` is used to detect the element that needs to be removed. Its value must match the class name of an element that wraps the partial. If you do not declare it, it will default remove the closest parent element.
+- The partial added when clicking `link_to_add_association` is named for the association name with the `_fields` suffix. In this example, the partial is named `task_fields`. You can change the partial name by passing the `partial_name` option to `link_to_add_association`.
 
 View details implement for this sample at [rondo_form_demo_turbo_8](https://github.com/hungle00/turbo_8_demos/tree/rondo_form)
 
