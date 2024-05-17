@@ -77,6 +77,18 @@ In your `_task_fields` partial:
 </div>
 ```
 
+### Controller
+
+Using projects example, in your controller ProjectsController, your params method should look like:
+``` ruby
+def project_params
+  params.require(:project).permit(:name, :description, tasks_attributes: [:description, :done, :_destroy, :id])
+end
+```
+
+params `:_destroy` allow to delete tasks and `:id` allow to update tasks on update action
+
+
 _Convention_:
 
 - For convention, I named Stimulus controller `nested-rondo`. But you can change the name of Javascript file and the value of `data-controller` to match your purpose.
