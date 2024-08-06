@@ -31,19 +31,22 @@ module RondoForm
 
     # shows a link that will allow to dynamically add a new associated object.
     #
-    # - *name* :         the text to show in the link
-    # - *f* :            the form this should come in
-    # - *association* :  the associated objects, e.g. :tasks, this should be the name of the <tt>has_many</tt> relation.
-    # - *html_options*:  html options to be passed to <tt>link_to</tt> (see <tt>link_to</tt>)
-    # - *&block*:        see <tt>link_to</tt>
+    # - *name* :            the text to show in the link
+    # - *f* :               the form this should come in
+    # - *association* :     the associated objects, e.g. :tasks, this should be the name of the <tt>has_many</tt> relation.
+    # - *render_options*:   options to be passed to <tt>render</tt>
+    # - *html_options*:     html options to be passed to <tt>link_to</tt> (see <tt>link_to</tt>)
+    # - *&block*:           see <tt>link_to</tt>
 
     def link_to_add_association(*args, &block)
       if block_given?
-        f, association, html_options = *args
+        f, association, render_options, html_options = *args
+        render_options ||= {}
         html_options ||= {}
-        link_to_add_association(capture(&block), f, association, html_options)
+        link_to_add_association(capture(&block), f, association, render_options, html_options)
       else
-        name, f, association, html_options = *args
+        name, f, association, render_options, html_options = *args
+        render_options ||= {}
         html_options ||= {}
 
         html_options[:class] = [html_options[:class], "add_fields"].compact.join(' ')
@@ -54,17 +57,19 @@ module RondoForm
         new_object = f.object.class.reflect_on_association(association).klass.new
         model_name = new_object.class.name.underscore
         hidden_div = content_tag("template", id: "#{model_name}_fields_template", data: {'nested-rondo_target': 'template'}) do
-          render_association(association, f, new_object, html_options)
+          render_association(association, f, new_object, render_options)
         end
         hidden_div.html_safe + link_to(name, '', html_options )
       end
     end
 
     # :nodoc:
-    def render_association(association, f, new_object, html_options)
-      partial_name = html_options[:partial_name] || association.to_s.singularize + "_fields"
+    def render_association(association, f, new_object, render_options)
+      locals = render_options.delete(:locals) || {}
+      render_options[:partial] = "#{association.to_s.singularize}_fields" unless render_options[:partial]
       f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-        render(partial_name, :f => builder, :dynamic => true)
+        locals.store(:f, builder)
+        render(render_options[:partial], locals)
       end
     end
   end
