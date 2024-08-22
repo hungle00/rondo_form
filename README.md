@@ -34,6 +34,45 @@ class Project < ApplicationRecord
 end
 ```
 
+## View helpers
+
+### `link_to_add_association(name, form_builder, render_options, html_options, &block)`
+
+### Signatures
+```ruby
+link_to_add_association(name, form_builder, render_options, html_options)
+# Link text is passed in as name
+
+link_to_add_association(form_builder, render_options, html_options, &block)
+# Link text is passed in as a block
+```
+
+### Options
+- `render_options: hash containing options for Rails' render helper` - This is passed to the Rails `render` helper to
+provide the options that are desired when rendering your association fields. If no special requirements are needed,
+can be passed as `nil` or and empty hash `{}`.
+
+- `html_options: hash containing options for Rails' link_to helper` - This is passed to the Rails `link_to` helper to
+provide the options that are desired when rendering your association fields. If no special requirements are needed,
+can be passed as `nil` or and empty hash `{}`.
+
+### `link_to_remove_association(name, f, html_options, &block)`
+
+### Signatures
+```ruby
+link_to_remove_association(name, form_builder, html_options)
+# Link text is passed in as name
+
+link_to_remove_association(form_builder, html_options, &block)
+# Link text is passed in as a block
+```
+
+### Options
+
+- `html_options: hash containing options for Rails' link_to helper` - This is passed to the Rails `link_to` helper to
+provide the options that are desired when rendering your association fields. If no special requirements are needed,
+can be passed as `nil` or and empty hash `{}`.
+
 ### Sample with SimpleForm
 
 The RondoForm gem adds two helper functions: `link_to_add_association` and `link_to_remove_association`.

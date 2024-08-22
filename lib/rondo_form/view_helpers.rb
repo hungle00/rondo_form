@@ -31,12 +31,14 @@ module RondoForm
 
     # shows a link that will allow to dynamically add a new associated object.
     #
-    # - *name* :            the text to show in the link
-    # - *f* :               the form this should come in
-    # - *association* :     the associated objects, e.g. :tasks, this should be the name of the <tt>has_many</tt> relation.
-    # - *render_options*:   options to be passed to <tt>render</tt>
+    # - *name* :               the text to show in the link
+    # - *f* :                  the form this should come in
+    # - *association* :        the associated objects, e.g. :tasks, this should be the name of the <tt>has_many</tt> relation.
+    # - *render_options*:      options to be passed to <tt>render</tt>
+    #   - partial: 'file_name'
+    #   - locals: { hash_of: 'local variables for rendered partial' }
     # - *html_options*:     html options to be passed to <tt>link_to</tt> (see <tt>link_to</tt>)
-    # - *&block*:           see <tt>link_to</tt>
+    # - *&block*:              see <tt>link_to</tt>
 
     def link_to_add_association(*args, &block)
       if block_given?
