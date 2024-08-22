@@ -56,7 +56,7 @@ can be passed as `nil` or and empty hash `{}`.
 provide the options that are desired when rendering your association fields. If no special requirements are needed,
 can be passed as `nil` or and empty hash `{}`.
 
-### `link_to_remove_association(name, f, html_options, &block)`
+### `link_to_remove_association(name, form_builder, html_options, &block)`
 
 ### Signatures
 ```ruby
